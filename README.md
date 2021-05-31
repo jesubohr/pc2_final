@@ -14,5 +14,5 @@
     docker-compose up --build
 ```
 To enter:
-- Jupyter in port 8000
+- Jupyter in port 8000, password: 1234
 - Dash in port 8080
