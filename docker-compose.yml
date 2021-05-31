@@ -1,0 +1,33 @@
+version: "3.3"
+services:
+    app:
+        container_name: jupyterApp
+        build: ./jupyter
+        restart: always
+        depends_on:
+            - db
+        links:
+            - "db"
+        volumes:
+            - ./jupyter/app:/jupyter/app
+        ports: 
+            - "8000:8888"
+    db:
+        container_name: postgreDatabase
+        restart: always
+        build: ./database
+        volumes:
+            - ./database/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+    dash:
+        container_name: dashApp
+        build: ./dash
+        command: python server.py
+        restart: always
+        volumes:
+            - ./dash/app:/app
+        ports:
+            - '8080:8050'
+        depends_on: 
+            - db
+        links:
+            - "db"
